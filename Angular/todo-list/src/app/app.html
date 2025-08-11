@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="todo-list">
+
+    {{title}}
+
+    <div class="input-group">
+      <input type="text" placeholder="Todo" #newTask>
+      <button (click)="add(newTask.value)" class="add-button">+</button>
+    </div>
+    <table>
+      <tr *ngFor="let task of tasks" class="even">
+        <td>
+          <pre>
+            {{task}}
+          </pre>
+        </td>
+        <td>
+          <button (click)="remove(task)" class="remove-button">X</button>
+          <button (click)="markAsDone(task)" class="done-button">Done</button>
+        </td>
+      </tr>
+      
+    </table>
+  </div>
+</div> 

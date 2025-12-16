@@ -1,11 +1,3 @@
-Preparing for a mid-level .NET developer interview in Kathmandu (or generally anywhere) with 2 years of experience requires a good grasp of both core and advanced .NET concepts, practical development skills, and an understanding of software design and project workflows.
-
-Here’s a structured guide to **what he should prepare for** and **what questions he might face**.
-
----
-
-## 🔧 Key Areas to Prepare For
-
 ### 1. **.NET and C# Fundamentals**
 
 * Object-Oriented Programming (OOP) principles
@@ -505,4 +497,192 @@ pdf.output("DotNet_Interview_Prep.pdf")
 2. Install the required library: `pip install fpdf`
 3. Run the script — it will create a file named `DotNet_Interview_Prep.pdf`.
 
-Would you like this content formatted into a downloadable Word file or another format instead?
+- Angular is a frontend framework which you can use to build web applications and you can build single page applications.
+- SPA (Single Page Application) gets downloaded by the browser once you visit the page and then changes are handled locally instead of well downloading the entire web application or website over and over again only because you are clicking a button or linke for example.
+- In Angular, you create a single page application and when you host it and you visit that  application or any other user visits that application or website, then the browser downloads the entire application and handles the changes locally. So this really speeds up the overall user experience.
+
+## Command 
+- PS D:\CodeDotnet\BlazorMovieWebApp\Angular> Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+- PS D:\CodeDotnet\BlazorMovieWebApp\Angular> npm install -g @angular/cli
+
+## ✅ **1. What is CI/CD (Continuous Integration / Continuous Deployment)?**
+
+### 🔹 CI (Continuous Integration)
+
+CI is the **process of automatically building and testing code every time** a developer pushes changes to the code repository.
+
+**Goals:**
+
+* Detect errors early
+* Keep the codebase healthy
+* Ensure everyone is working with the latest tested code
+
+**Example CI Steps:**
+
+1. Developer pushes code to GitHub
+2. CI pipeline runs:
+
+   * Restore NuGet packages
+   * Build the .NET solution
+   * Run unit tests
+   * Generate test results
+
+**Tools:**
+
+* GitHub Actions
+* Azure DevOps
+* Jenkins
+* GitLab CI
+
+---
+
+### 🔹 CD (Continuous Delivery/Deployment)
+
+* **Continuous Delivery**: After CI, the app is packaged and made ready for deployment (but still requires manual approval).
+* **Continuous Deployment**: The app is **automatically deployed** to production after tests pass (no manual step).
+
+**Typical CD Steps:**
+
+1. CI finishes
+2. Build is packaged (e.g., `.dll` + `.json` for .NET)
+3. Docker image is created (optional)
+4. Deployment to:
+
+   * Test/QA environment
+   * Staging/Production
+   * Azure App Service / AWS / Kubernetes
+
+---
+
+### 🛠 Sample CI/CD Workflow for ASP.NET Core:
+
+```yaml
+# GitHub Actions CI/CD example
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.x'
+    - name: Build
+      run: dotnet build MyApp.sln
+    - name: Test
+      run: dotnet test MyApp.Tests/MyApp.Tests.csproj
+    - name: Publish
+      run: dotnet publish -c Release -o publish/
+```
+
+---
+
+## ✅ **2. What is Docker?**
+
+### 🔹 Definition:
+
+Docker is a **containerization platform** that allows you to **package your application and its dependencies into a single unit** called a **container**.
+
+> Think of Docker containers as lightweight, portable virtual machines — but faster and easier to manage.
+
+---
+
+### 🔹 Why Use Docker?
+
+* Same behavior across dev, test, and production
+* Fast deployments
+* Easy scaling and isolation
+* Works well with microservices and CI/CD
+
+---
+
+### 🔹 Basic Docker Concepts:
+
+* **Dockerfile**: Script that tells Docker how to build your container.
+* **Image**: Blueprint of your application (built from Dockerfile).
+* **Container**: Running instance of an image.
+
+---
+
+### 🛠 Sample Dockerfile for ASP.NET Core App
+
+```Dockerfile
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY . .
+RUN dotnet restore
+RUN dotnet build -c Release
+RUN dotnet publish -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "MyApp.dll"]
+```
+
+### Run your container:
+
+```bash
+docker build -t myapp .
+docker run -d -p 8080:80 myapp
+```
+
+---
+
+## 🔁 CI/CD + Docker Workflow
+
+1. Code is pushed → triggers GitHub Action
+2. Tests run → Docker image is built
+3. Image is pushed to Docker Hub / Azure Container Registry
+4. App is deployed to Azure App Service / Kubernetes
+
+---
+
+## Summary Table
+
+| Concept    | Purpose                                   |
+| ---------- | ----------------------------------------- |
+| CI         | Automatically build & test code           |
+| CD         | Automatically deploy app after CI         |
+| Docker     | Package app + dependencies into container |
+| Dockerfile | Instructions to build Docker image        |
+| Container  | Lightweight, portable app runtime         |
+
+## Components in Angular
+- Components are the foundational building blocks for any Angular application. Each component has three parts:
+  - TypeScript class
+  - HTML Template
+  - CSS Style
+
+- In Angular, the component's logic and behavior are defined in the component's TypeScript class.
+
+## Property Binding in Angular
+- Property binding in Angular enables you to set values for properties of HTML elements, Angular components and more.
+- Use property binding to dynamically set values for properties and attributes. You can do things such as toggle button features, set image paths programmatically, and share values between components.
+
+## Event Handling
+- Event handling enables interactive features on web apps. It gives you the ability as a developer to respond to user actions like button presses, form submissions and more.
+- In Angular you bind to events with the parentheses syntax ().
+
+## Component input properties
+- Sometimes app development requires you to send data into a component. This data can be used to customize a component or perhaps send information from a parent component to a child component.
+- Angular uses a concept called input. This is similar to props in other frameworks. To create an input property, use the input() function.
+
+## Component output properties
+- When working with components it may be required to notify other components that something has happened. Perhaps a button has been clicked, an item has been added/removed from a list or some other important update has occurred. In this scenario components need to communicate with parent components.
+- Angular uses the output() function to enable this type of behavior.
+
+## Deferrable Views
+- Sometimes in app development, you end up with a lot of components that you need to reference in your app, but some of those don't need to be loaded right away for various reasons.
+- Maybe they are below the visible fold or are heavy components that aren't interacted with until later. In that case, we can load some of those resources later with deferrable views.
+
